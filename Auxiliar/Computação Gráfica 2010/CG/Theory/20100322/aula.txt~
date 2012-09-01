@@ -1,0 +1,72 @@
+------------------------------------------------------------------------------------
+
+Conversão Matricial de Circunferências
+
+------------------------------------------------------------------------------------
+
+A equação de uma circunferencia de raio R, com centro na origem de um sistema de 
+coordenadas cartesianas, é dada por:
+
+x^2 + y^2 = R^2 (x² + y² = R²)
+
+onde x e y são as coordenadas reais dos pontos que pertencem a curva.
+
+Nota: circunferências não centradas na origem podem ser sempre transladadas para 
+a origem.
+
+------------------------------------------------------------------------------------
+
+Para circunferências na origem, em um sistema de coordenadas bidimensional, devido 
+às características de simetria, podemos considerar o traçado da curva apenas no 
+primeiro quadrante. Os demais podem ser traçados através de operações de rotações 
+e translações.
+
+Diversas abordagens podem ser consideradas para a conversão matricial de 
+circunferências.
+
+------------------------------------------------------------------------------------
+
+Neste curso, podemos dividir estas abordagens em:
+
+- Métodos não incrementais
+
+- Métodos incrementais
+
+------------------------------------------------------------------------------------
+
+Métodos não incrementais:
+
+- Um polígono regular de n lados é usado para simular um arco de circunferência.
+
+- A complexidade aumenta conforme o valor de n, porém os resultados são melhores.
+
+------------------------------------------------------------------------------------
+
+Métodos incrementais:
+
+- Em geral, algoritmos incrementais são mais rápidos quando se compara os 
+  resultados visuais.
+
+- Uma abordagem poderia ser o uso da equação y = f(x), onde:
+
+  y = +- sqrt(R^2 - x^2)
+  
+- Para desenhar 1/4 da circunferência, podemos variar x de 0 a R, em incrementos 
+  de uma unidade, calculando a raiz positiva da equação acima em cada passo.
+
+------------------------------------------------------------------------------------
+
+Métodos incrementais:
+
+Algumas desvantagens:
+
+- Estratégia pouco eficiente pois requer operações complexas 
+  (multiplicações e raiz quadrada)
+
+- O algoritmo apresenta problemas para valores de x próximos a R 
+  (por quê? - relacionado a tangente)
+
+- Uma possível solução é considerar um sistema de coordenadas polares 
+  (x = R * cos theta e y = R * sen theta), para 0 <= teta <= pi/2
+
+

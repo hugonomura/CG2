@@ -1,0 +1,24 @@
+Buscar todos os documentos que falam sobre o tema 'Indexação de Banco de Dados' ordenados por ano (decrescente)
+SELECT ID_PUBLICACAO
+FROM CAMPOS
+WHERE NOME LIKE 'year'
+	AND
+	ID_PUBLICACAO IN (
+	SELECT ID_PUBLICACAO
+	FROM CAMPOS
+	WHERE NOME LIKE '%title' AND VALOR LIKE '%Indexing%data%base%')
+ORDER BY VALOR DESC;
+
+
+Contar a quantidade de arquivos publicados em 2009
+SELECT count(*) FROM campos WHERE nome LIKE 'year' AND VALOR LIKE '2009';
+
+
+Descobrir todos os livros do autor Philip Berstein
+SELECT VALOR
+FROM CAMPOS
+WHERE NOME LIKE '%title' AND
+	ID_PUBLICACAO IN (
+	SELECT ID_PUBLICACAO
+	FROM campos
+	WHERE nome LIKE 'author' AND VALOR LIKE 'Phil% Bernstein%');

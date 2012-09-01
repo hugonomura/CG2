@@ -1,0 +1,16 @@
+Lista 2
+
+EX1- 
+
+1.Obter a intersecção da linha de varredura com todos os lados do polígono.
+2. Ordenar os pontos de intersecção (em x crescente).
+3. Preencher os pixels entre pares de pontos de intersecção do polígono que são internos a ele. Para
+determinar quais os pares que são internos ao polígono, podemos usar a regra de Paridade: A
+paridade inicialmente é par, e a cada intersecção encontrada o bit de paridade é invertido, o pixel
+é pintado quando a paridade é impar, e não é pintado quando é par.
+
+
+
+
+                                               
+ 

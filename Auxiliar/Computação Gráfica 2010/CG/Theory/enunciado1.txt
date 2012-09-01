@@ -1,0 +1,3 @@
+pode-se adotar o critério de selecionar os dois pixels imediatamente acima e abaixo do ponto de intersecção do segmento com cada vertical.
+
+restrição: obtem-se linhas densas, como se o segmento fosse espesso.

@@ -1,0 +1,168 @@
+-------------------------------------------------------------------------
+
+Transformações geométricas no plano
+
+-------------------------------------------------------------------------
+
+- Considere um sistema ortogonal de coordenadas (sistema cartesiano)
+representado por (O, B), onde O é um ponto do plano B uma base 
+ortonormal para o plano;
+
+- A base pode ser representada por B = {u, v}, onde u, v pertencem ao 
+plano, são ortogonais dois a dois e unitários.
+
+- O ponto "O" é chamado de "origem do sistema de coordenadas";
+
+- A origem pode estar localizada em qualquer posição no plano 
+(abstração matemática);
+
+- Fixado o ponto O, assusmimos que as coordenadas da origem são dadas 
+pelo par ordenado de números reais (0,0);
+
+- Todo vetor possui uma representação na origem de um sistema de 
+coordenadas; (Por quê?)
+
+- Portanto, u e v, possuem representantes na origem O.
+
+- Sendo u e v ortogonais, unitários e, com representantes na origem 
+do sistema de coordenadas, quais são as cordenadas de u e v?
+
+u = (1, 0)   v = (0, 1)
+
+- Isto é, sabemos que u e v pertencem ao plano, portanto, são 
+reresentados por um par ordenado de números reais.
+
+- Em outras palavras, u = (?, ?) e v = (?, ?)
+
+-------------------------------------------------------------------------
+
+u = OA = A - O = (x, 0) - (0, 0) = (x, 0)
+
+||u|| = sqrt(x^2 + y^2) = 1
+
+x = 1
+
+-------------------------------------------------------------------------
+
+p = xu + yu 
+
+ou
+
+p = (x, y)
+
+ou
+
+p = |x|
+    |y|
+
+-------------------------------------------------------------------------
+
+OP = P - O = (x, y) - (0,0) = (x, y)
+
+-------------------------------------------------------------------------
+
+As seguintes transformações serão estudadas:
+
+- Transformação de translação de pontos
+
+- Transformação de escala
+
+- Transformação de rotação de pontos
+
+- Transformação de reflexão
+
+-------------------------------------------------------------------------
+
+Transformação de translação de pontos
+
+- Transladar significa movimentar um objeto;
+
+- Transladamos um objeto quando transladamos todos os seus pontos.
+
+-------------------------------------------------------------------------
+
+Dado um ponto p = (x, y), podemos transladá-lo somando a este ponto 
+outro vetor de coordenadas t = (x',y'), obtendo pt = (x + x', y + y')
+
+|t| =
+|x|
+
+-------------------------------------------------------------------------
+
+Transformação de escala
+
+- Escalonar significa mudar as dimensões de escala de um vetor;
+
+- Escalonamos um objeto no plano quando escalonamos todos seus requisitos.
+
+-------------------------------------------------------------------------
+
+Dado um ponto p = (x, y), podemos escaloná-lo multiplicando cada 
+coordenada deste por outras coordenadas de um outro ponto S = (Sx, Sy), 
+obtendo pe = (x*Sx, y*Sy).
+
+-------------------------------------------------------------------------
+
+q = |x| + |x'|
+    |y|   |y'|
+
+q = |x.Sx| = |Sx O | * |x|
+    |y.Sx|   |O  SX| * |y|
+
+-------------------------------------------------------------------------
+
+Transformação de rotação de pontos
+
+- Rotacionar um ponto significa girar o vetor em torno da origem;
+
+- Rotacionamos um objeto no plano quando fazemos esta operação para
+todos os seus pontos.
+
+-------------------------------------------------------------------------
+
+Se um ponto p = (x, y), a uma distância R da origem do sistema de 
+coordenadas, for rotacionado de um ângulo theta, em torno da origem, 
+no sentido anti-horário, suas novas coordenadas podem ser descritas por 
+
+-------------------------------------------------------------------------
+
+q = (x', y'), onde
+
+x' = R * cos (theta + fi)
+
+y' = R * sen (theta + fi)
+
+-------------------------------------------------------------------------
+
+x' = x * cos (theta) - y * sen (theta)
+
+y' = y * cos (theta) + x * sen (theta)
+
+-------------------------------------------------------------------------
+
+x' = R * cos (theta + 0)
+   = R * [cos (theta) * cos 0 - sen (theta) * sen 0]
+   = R * cos 0 * cos (theta) - R * sen 0 * sen (theta)
+   = x * cos theta - y * sen (theta)
+
+-------------------------------------------------------------------------
+
+Transformação de reflexão
+
+- A tranformação de reflexão em torno de um eixo, ou espelhamento (flip), 
+aplicada a um obeto, produz um novo obeto que é como se este fosse visto 
+reproduzindo por um espelho, posicionando no eixo em torno do qual se
+faz o espelhamento.
+
+-------------------------------------------------------------------------
+
+|x'| = |1  0| |x|
+|y'|   |0 -1| |y|
+
+reflexão horizontal: x' = -x ; y' = y
+
+reflexão vertical: x'=x; y = -y;
+
+-------------------------------------------------------------------------
+
+http://www.damasceno.info/damasceno/MeuSite/CompGraf04.htm

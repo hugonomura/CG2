@@ -1,0 +1,28 @@
+Características desejáveis
+
+-------------------------------------------------------------------
+
+Linearidade: os pixels traçados devem dar a aparencia de que 
+estão sobre uma reta.
+
+-------------------------------------------------------------------
+
+Precisão: os segmentos devem iniciar e terminar nos pontos 
+especificados.
+
+-------------------------------------------------------------------
+
+Espessura (densidade) uniforme: a densidade da linha é dada 
+pelo número de pixels traçados dividido pelo comprimento da linha.
+
+-------------------------------------------------------------------
+
+Intensidade: independente da inclinação.
+
+-------------------------------------------------------------------
+
+Continuidade: a imagem não apresenta interrupções indesejáveis.
+
+-------------------------------------------------------------------
+
+Rapidez no traçado dos segmentos.

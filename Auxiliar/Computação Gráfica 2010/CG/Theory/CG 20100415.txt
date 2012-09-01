@@ -1,0 +1,162 @@
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Sistemas de Referências
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+				     Sistema de Referência do Universo
+
+						  ^     v
+
+Sistema de Referência do Objeto  ->  Sistema de Referência Normalizado  ->  Sistema de Referência do dispositivo
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Resolução Gráfica: 
+
+- Todos os dispositivos de I/O gráficos usam uma malha retangular de posições endereçáveis - a qual é denominada "retângulo de visualização".
+
+- A "resolução gráfica" de um dispositivo é o número de posições (ou pontos, ou pixels) horizontais e verticais que ele pode distinguir.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Existem quatro parâmetros que definem a resolução Gráfica:
+
+  1) ndh - o número de posições endereçáveis horizontalmente;
+
+  2) ndv - o número de posições endereçáveis verticalmente;
+
+  3) largura - a largura do retângulo de visualização em mm;
+
+  4) altura - a altura do retângulo de visualização em mm.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+A partir desses 4 parâmetros, vários outros podem ser calculados:
+
+1) Resolução horizontal: horiz_res = ndh / largura
+
+2) Tamanho ponto horizontal: horiz_dot_size = largura / ndh;
+
+3) Resolução Vertical: vert_res = ndv / altura;
+
+4) Tamanho ponto vertical: vert_dot_size = altura / ndv;
+
+5) Total pontos endereçáveis: total_nr_dots = ndh * ndv;
+
+6) Resolução de área: area_res = total_nr_dots / (largura * altura);
+
+7) Razão de aspecto gráfica: aspect_ratio = vert_dot_size / horiz_dot_size;
+
+8) Razão de aspecto física: physical_aspect_ratio = altura / largura.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+- Note que horiz_res, vert_res e area_res definem resoluções físicas, enquanto que ndh, ndv e total_nr_dots definem resoluções gráficas;
+
+- Disositivos de visualização podem ter a mesma resolução gráfica, com resoluções físicas muito diferentes;
+
+- O ideal seria ter um aspect_ratio igual ou próximo de 1.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Mapeamento de coordenadas:
+
+O sistema de coordenadas do mundo, ou sistema de coordenadas do usuário, que consiste de coordenadas cartesianas (x, y), num intervalo qualquer definido pelo usuário pode ser dado por:
+
+xmin <= x <= xmax
+
+ymin <= y <= ymax
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+- Os parâmetros que definem o intervalo de valores de x e y, xmin, ymin, xmax e ymax, definem uma área retangular no espaço bidimensional, denominada de janela;
+
+- A transformação de coordenadas do usuário (x, y) para coordenadas normalizadas, denominada transformação de visualização, é dada por:
+
+ncx = (x - xmin) / (xmax - xmin)
+
+ncy = (y - ymin) / (ymax - ymin)
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+SRN -> SRD
+
+As coordenadas normalizadas são variáveis reais definidas como:
+
+0 <= ncx <= 1
+
+0 <= ncy <= 1
+
+A vantagem da utilização de coordenadas de dispositivos normalizadas é que padrões gráficos podem ser discutidos usando um sistema de coordenadas independente de dispositivos específicos.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+O mapeamento de coordenadas normalizadas (reais) par coordenadas do dispositivo (inteiros) é liner e pode ser considerada como:
+
+dcx = round(ncx * (ndh - 1))
+
+dcy = round(ncy * (ndv - 1))
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Transformações no Espaço
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Transformações no Espaço 3D
+
+- A capacidade para representar e visualizar um objeto em três dimensões é fundamental para a percepção de sua forma.
+
+- Em muitas situações, é necessário mais do que isto, ou seja, poder "manusear" o objeto, movimentando-o através de rotaçõesm tranlações e mesmo escala.
+
+- Assim, generalizando o que foi visto para transformações em 2D, onde estas transformações foram representadas por matrizes 3x3 (utilizando coordenadas homogêneas), as transformações tridimensionais serão representadas por matrizes 4x4 também em coordenadas homogêneas.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Um ponto P de coordenadas (x, y, z) será representado por (x, y, z, W), onde, como antes podemos assumir, sem perda de generalidade W = 1.
+
+Nota: a direção do eixo z é dada pela regra da mão direita.
+
+|x'|   |1 0 0 dx|   |x|
+|y'| = |0 1 0 dy| * |y|
+|z'|   |0 0 1 dz|   |z|
+|1 |   |0 0 0 1 |   |1|
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Matriz de escalonamento no espaço de coordenadas cartesianas homogêneas: 
+
+|x'|   |Sx 0  0  0|   |x|
+|y'| = |0  Sy 0  0| * |y|
+|z'|   |0  0  Sz 0|   |z|
+|1 |   |0  0  0  1|   |1|
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Matriz de rotação no espaço de coordenadas cartesianas homogêneas em relação ao eixo z:
+
+|x'|   |cos(t) -sin(t) 0 0|   |x|
+|y'| = |sin(t)  cos(t) 0 0| * |y|
+|z'|   |  0       0    1 0|   |z|
+|1 |   |  0       0    0 1|   |1|
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Matriz de rotação no espaço de coordenadas cartesianas homogêneas em relação ao eixo x:
+
+|x'|   |1   0       0    0|   |x|
+|y'| = |0 cos(t) -sin(t) 0| * |y|
+|z'|   |0 sin(t)  cos(t) 0|   |z|
+|1 |   |0   0       0    1|   |1|
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Matriz de rotação no espaço de coordenadas cartesianas homogêneas em relação ao eixo y:
+
+|x'|   | cos(t) 0 sin(t) 0|   |x|
+|y'| = |   0    1   0    0| * |y|
+|z'|   |-sin(t) 0 cos(t) 0|   |z|
+|1 |   |   0    0   0    1|   |1|
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------

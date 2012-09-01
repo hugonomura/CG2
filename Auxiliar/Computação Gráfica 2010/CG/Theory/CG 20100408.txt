@@ -1,0 +1,148 @@
+----------------------------------------------------------------------------
+
+Coordenadas homogêneas
+
+----------------------------------------------------------------------------
+
+Para o escalonamento e a rotação, as transformações de um ponto p = (x, y), podem ser expressas por:
+
+- q = Sp, onde (x', y') é o ponto p escalonado por Sx e Sy. S é a matriz de transformação.
+
+- q = Rp, onde (x', y') é o ponto p rotacionado de um determinado ângulo no sentido anti-horário e R é a matriz de rotação.
+
+Para o escalonamento, a matriz S é dada por:
+
+S = |Sx 0|	p = |x|		q = |x'|
+    |0 Sy|	    |y|		    |y'|
+
+Portanto:
+
+q = Sp <=> |x'| = |Sx 0| |x| = |x.Sx|
+           |y'|   |0 Sy| |y|   |y.Sy|
+
+Contudo, para as transformações de translação, não conseguimos expressar as operações em termos de operadores lineares.
+
+|x'| = |x| + |dx|
+|y'|   |y|   |dy|
+
+Com a introdução do conceito de coordenadas homogêneas, todas as transformações podem ser tratadas comoo operadores lineares, ou seja, através da multiplicação de uma matriz por um vetor de coordenadas.
+
+|x'| = |1 0| |x| + |dx|  transformação afim
+|y'|   |0 1| |y|   |dy|
+
+Em coordenadas homogêneas, adicionamos uma terceira coordenada ao ponto. Assim, ao invés do ponto p ser representado pelas coordenadas (x, y), este passa a ser representado por uma tripla ordenada (x, y, W).
+
+Dizemos que dois pontos em coordenadas homogêneas representam o mesmo ponto no espaço bidimensional se e somente se um é multiplo do outro;
+
+Por exemplo, (2, 3, 6) e (4, 6, 12) são triplas ordenadas que representam o mesmo ponto;
+
+(4, 6, 12) = g.(2, 3, 6) ==> g = 2
+
+g = "gama"
+
+Portanto, podemos dizer que um ponto do plano possui infinitas representações homogêneas.
+
+Importante frisar que ao menos uma das coordenadas homogêneas deve ser diferente de zero;
+
+Se W é uma coordenada diferente de zero, podemos dividir (x, y, W) por W, obtendo (x/W, y/W, 1);
+
+As coordenadas x/W e y/W são chamadas de coordenadas cartesianas do ponto homogêneo.
+
+(x/W, y/W, 1) = 1/W (x, y, W)
+
+|x/W|
+|y/W| => coordenasas homogêneas do ponto cartesiano
+| 1 |
+
+Embora W possa assumir qualquer valor, usualmente, assumimos W = 1;
+
+Portanto, podemos obter pontos homogeneizados, assumindo o plano W = 1, da forma (x, y, 1);
+
+Podemos agora escrever todas as operações de tranlação, rotação e escalonamento (assim como as operações de reflexão) como operadores lineares no espaço tridimensional.
+
+W = 1
+
+(x, y) pertence a R^2 -> coordenadas cartesianas
+
+(x, y, 1) pertence a R^3 -> coordenadas cartesianas homogêneas do ponto p pertencente a R^2
+
+Portanto, agora, considerando o conceito de coordenadas homogêneas, a matriz de escalonamento é dada por:
+
+    |Sx 0  0|
+S = |0  Sy 0|
+    |0  0  1|
+
+|x'|   |Sx 0  0| |x|    |x'|   |x.Sx|
+|y'| = |0  Sy 0| |y| => |y'| = |y.Sy|
+|z'|   |0  0  1| |1|    |z'|   | 1  |
+
+A matriz de rotação em coordenadas homogêneas é dada por:
+
+    |cos o -sen o  0|
+R = |sen o  cos o  0|
+    |  0      0    1|
+
+|x'|   |cos o -sen o  0| |x|    |x'|   |x.cos o - y.sen o|
+|y'| = |sen o  cos o  0| |y| => |y'| = |x.sen o + y.cos o|
+|z'|   |  0      0    1| |1|    |z'|   |        1        |
+
+Finalmente, a matriz de translação em coordenadas homogêneas é dada por:
+
+    |1   0  dx|
+T = |0   1  dy|
+    |0   0  1 |
+
+Contudo, para as transformações de translação, não conseguimos expressar as operações em termos de operadores lineares.
+
+|x'| = |x| + |dx| = |x + dx|
+|y'|   |y|   |dy|   |y + dy|
+
+|x'|   |1   0  dx| |x|    |x'|   |x + dx|
+|y'| = |0   1  dy| |y| => |y'| = |y + dy|
+|z'|   |0   0  1 | |z|    |z'|   |  1   |
+
+Composição das matrizes
+
+A = S.R.T.M
+
+Não haverá necessidade de passar toda vez por todas as matrizes.
+
+q = A.p
+
+----------------------------------------------------------------------------
+
+Sistemas de Referências
+
+----------------------------------------------------------------------------
+
+Um determinado sistema de coordenadas é denominado de Sistema de Referência se for um sisema de coordenadas cartesianas para alguma finalidade específica;
+
+Ao definirmos um sistema de coordenadas de referência, devemos especificar dois aspectos principais: a unidade de referência básica e os limites extremos dos valores aceitos para descrever os objetos.
+
+Vamos considerar quatro sistemas de referências:
+
+- Sistemas de Referência do Universo;
+- Sistemas de Referência do Objeto;
+- Sistemas de Referência Normalizado;
+- Sistemas de Referência do Dispositivo.
+
+Sistemas de Referência do Universo (SRU)
+
+É chamado de coordenadas do universo, ou do mundo, o sistema de referência utilizado para descrever os objetos em termos das coordenadas utilizadas pelo usuário em determinada aplicação.
+
+Sistemas de Referência do Objeto (SRO)
+
+Neste sistema de referẽncia fazemos com que cada objeto seja um muniuniverso individual, ou seja, cada objeto tem suas particularidades descritas em função de seu sistema, muitas vezes coincidindo o centro do sistema de coordenas com o seu centro de gravidade.
+
+Sistemas de Referência Normalizado (SRN)
+
+Esse sistema trabalha com as coordenadas narmalizadas, isso é, com valores entre 0 e 1. O SRN serve como um sistema de referência intermediário entre o SRU e o SRD. Sua principal aplicação é tornar a geração das imagens independente do dispositivo, pois as coordenadas do universo são convertidas para um sistema de coordenadas padrão normalizado.
+
+Sistemas de Referência do Dispositivo (SRD)
+
+Utiliza coordenadas que podem ser fornecidas diretamente para um dado dispositivo de saída específico. Por exemplo, em um vídeo esses valores podem ser o número máximo de pixels que podem ser acesos (640 x 480 etc.) ou podem indicar a resolução especificada em determinada configuração do sistema operacional.
+
+SRO -> SRN -> SRD
+       ^ v
+       SRU
+

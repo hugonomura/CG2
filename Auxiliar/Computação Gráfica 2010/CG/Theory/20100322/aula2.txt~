@@ -1,0 +1,15 @@
+--------------------------------------------------------------------
+
+Preenchimento de Poligonos
+
+--------------------------------------------------------------------
+
+A tarefa de preencher um poligono pode ser dividida em duas etapas:
+
+1) Decidir que pixels pintar para preencher o polígono
+
+2) Decidir com que valor pintar o pixel
+
+Nota: o problema de "cores" será tratado mais tarde neste curso.
+
+--------------------------------------------------------------------

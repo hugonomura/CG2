@@ -1,0 +1,30 @@
+Conversão matricial de segmentos de reta
+
+------------------------------------------------------------------------------
+
+1) Pode-se adotar o criterio de selecionar os dois pixels imediatamente acima 
+e abaixo do ponto de intersecção do segmento com cada vertical.
+
+Restrição: obtém-se linhas densas, como se o segmento fosse espesso.
+
+------------------------------------------------------------------------------
+
+2) Selecionar todos os pixels cujas coordenadas são obtidas arredondando-se 
+os valores das coordenadas de algum ponto do segmento.
+
+Restrição: com segmentos a 45 graus o criterio produz resultados semelhantes 
+ao anterior.
+
+------------------------------------------------------------------------------
+
+3) Selecionar em cada vertical o pixel mais próximo do ponto de intersecção 
+ao segmento com a reta vertical.
+
+Vantagem: aparência leve e de continuidade.
+
+------------------------------------------------------------------------------
+
+4) Selecionar em cada vertical o pixel mais próximo do ponto de intersecção 
+ao segmento com a reta horizontal.
+
+Desvantagem: descontinuidade.

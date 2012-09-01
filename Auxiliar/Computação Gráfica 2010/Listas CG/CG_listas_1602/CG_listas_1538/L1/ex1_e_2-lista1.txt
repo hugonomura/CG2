@@ -1,0 +1,8 @@
+Exercício 1:
+
+Os dispositivos gráficos vetoriais conseguem traçar segmentos de reta perfeitos entre dois pontos da malha finita de pontos definida por suas superfícies de exibição. Os dispositivos matriciais, por outro lado, apenas conseguem traçar pontos, também em uma malha finita.
+
+Exercício 2:
+
+A conversão de de primitivas gráficas vetorias para matriciais são importantes pois os dispositivos gráficos de exibição são matriciais. Isso é, para poder exibir uma determinada imagem em um monitor, progetor, ou imprimir, é necessário primeiramente, caso a imagem seja vetorizada, converter para uma imagem matricial.
+

@@ -1,0 +1,27 @@
+int * translada(int * v , int Tx, int Ty){
+v[0] = v[0]+Tx;
+v[1] = v[1]+Ty;
+return v;
+}
+
+int * rotaciona(int * v , int ang){
+ang = Math.toRadians(ang);
+v[0] = v[0]*cos(ang) - v[1]*sin(ang);
+v[1] = v[0]*sin(ang) + v[1]*cos(ang);
+return v;
+}
+
+int * escalona(int * v, int escala){
+v=v*escala;
+return v;
+}
+
+int *refletehor(int * v){
+v[0] = -1*v[0];
+return v;
+}
+
+int * refletever(int * v){
+v[1] = -1*v[1];
+return v;
+}

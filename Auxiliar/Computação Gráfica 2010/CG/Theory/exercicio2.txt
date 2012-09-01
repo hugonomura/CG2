@@ -1,0 +1,30 @@
+------------------------------------------------------------------------------------------
+
+A = R * T * S 
+
+-> Rotacionar 45°
+-> Transladar no eixo x de 10 e no eixo y de 13 unidades.
+-> Escalonar no x por 1/2 e no y por 2.
+
+------------------------------------------------------------------------------------------
+
+// Matriz 3x3 considerando o espaço de coordenadas cartesianas homogêneas bidimensional
+
+struct Matriz {
+
+float a1, b1, c1,
+      a2, b2, c2,
+      a3, b3, c3;
+
+};
+
+struct Matriz * multiplica(struct Matriz *, struct Matriz *);
+
+------------------------------------------------------------------------------------------
+
+a = R * T * S
+
+x' = x * Sx * cos(t) + dx * cos(t) - y * Sy * sen(t) - dy * sen(t);
+y' = x * Sx * sen(t) + dx * sen(t) + y * Sy * cos(t) + dy * cos(t);
+
+------------------------------------------------------------------------------------------

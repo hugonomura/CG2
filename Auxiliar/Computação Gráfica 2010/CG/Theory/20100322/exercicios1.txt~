@@ -1,0 +1,7 @@
+Exercícios
+
+1) Implemente as quatro abordagens discutidas acima para a conversão matricial de um segmento de reta, dados como entrada os valores reais dos pontos inicial e final do segmento. Faça diversos testes com diferentes valores de entrada para os extremos do segmento de reta. Que conclusões você pode extrair de cada método?
+
+2) Implemente um algoritmo que, dados uma sequencia de pontos no plano, ligue estes pontos na ordem em que são apresentados para formular um polígono regular.
+
+Nota: considere a implementação discutida em sala de aula.

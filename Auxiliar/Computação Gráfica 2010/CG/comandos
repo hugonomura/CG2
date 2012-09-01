@@ -1,0 +1,3 @@
+gcc soka.c -o soka -lX11 -lm
+
+./soka    // Sem espaço entre a '/' e o 'soka'

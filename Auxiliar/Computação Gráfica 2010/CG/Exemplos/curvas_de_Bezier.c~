@@ -1,0 +1,38 @@
+#include<stdlib.h>
+#include<stdio.h>
+#include<math.h>
+#define PI 3.1415
+
+//Estrutura para representacao da matriz de transformacao linear sobre um ponto no espaço tridimensional homogêneo
+struct matriz4x4 {
+	float a11, a12, a13, a14;
+	float a21, a22, a23, a24;
+	float a31, a32, a33, a34;
+	float a41, a42, a43, a44;
+};
+
+//Estrutura para representacao de um ponto no espaço tridimensional homogêneo
+typedef struct ponto3D {
+	float x, y, z, W;
+}Ponto;
+
+int main(){
+	int n,i;
+	printf("Digite o numero de pontos de controle: ");
+	scanf("%d",&n);
+	
+	Ponto pControle[n];
+	for(i = 0; i < n; i++){
+		printf("\nDigite as coordenadas do ponto de controle %d: ",i);
+		scanf("%d",&pControle[i].x);
+		scanf("%d",&pControle[i].y);
+		scanf("%d",&pControle[i].z);
+	}
+
+	printf("\n\nOs Pontos de Controle sao:\n");
+	for(i = 0; i < n; i++){
+		printf("\t(%d,%d, %d)\n",pControle[i].x,pControle[i].y,pControle[i].z);
+	}
+
+	return 0;
+}
