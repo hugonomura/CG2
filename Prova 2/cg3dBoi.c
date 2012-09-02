@@ -1,19 +1,28 @@
-#include "cg2dBoi.h"
+#include "cg3dBoi.h"
 
 bufferdevice * devGL;  // variáveis globais para facilitar a exibição com a glut
 palette * palGL;
-//Analisar se vou usar 3D - Coordenada 3
-void SetWorld(float xmin, float xmax, float ymin, float ymax) {
+//Mundo 2D
+void SetWorld2d(float xmin, float xmax, float ymin, float ymax) {
 	XWMax = xmax;
  	XWMin = xmin;
  	YWMax = ymax;
  	YWMin = ymin;
 }
+//Mundo 3D
+void SetWorld3d(float xmin, float xmax, float ymin, float ymax, float zmin, float zmax) {
+	XWMax = xmax;
+ 	XWMin = xmin;
+ 	YWMax = ymax;
+ 	YWMin = ymin;
+	ZWMax = zmax;
+	ZWMin = zmin;
+}
 //Ponto 2D
-point * SetPoint(float x, float y, int color) {
-  	point * pnt;
+point2d * SetPoint2d(float x, float y, int color) {
+  	point2d * pnt;
   
-  	pnt = (point *) malloc(sizeof(point)); 
+  	pnt = (point2d *) malloc(sizeof(point2d)); 
   	pnt->x = x;
   	pnt->y = y;
   	pnt->color = color;
@@ -32,35 +41,65 @@ point3d * SetPoint3d(float x, float y, float z, int color) {
   
   	return pnt;
 }
-//Objeto com pontos 2D
-object * CreateObject(int numbers_of_points) {
-  	object * ob;
+//Cria Objeto com pontos 2D
+object2d * CreateObject2d(int numbers_of_points) {
+  	object2d * ob;
  
-  	ob = (object *) malloc(sizeof(object));
+  	ob = (object2d *) malloc(sizeof(object2d));
   	ob->numbers_of_points = 0;
-  	ob->points = (point *) malloc(numbers_of_points*sizeof(point));
+  	ob->points = (point2d *) malloc(numbers_of_points*sizeof(point2d));
  
   	return ob;
 }
-//Objeto com pontos 2D
-int SetObject(point * pnt, object * ob) {
+//Cria Objeto com pontos 3D
+object3d * CreateObject3d(int numbers_of_points) {
+  	object3d * ob;
+ 
+  	ob = (object3d *) malloc(sizeof(object3d));
+  	ob->numbers_of_points = 0;
+  	ob->points = (point3d *) malloc(numbers_of_points*sizeof(point3d));
+ 
+  	return ob;
+}
+//Seta Objeto com pontos 2D
+int SetObject2d(point2d * pnt, object2d * ob) {
   	ob->points[ob->numbers_of_points] = *pnt;
   	ob->numbers_of_points = ob->numbers_of_points + 1;
 
   	return 0;
 }
-//Objeto 2D
-object * ChangeColor(object * ob, int color) {
-  	object * oob;
+//Seta Objeto com pontos 3D
+int SetObject3d(point3d * pnt, object3d * ob) {
+  	ob->points[ob->numbers_of_points] = *pnt;
+  	ob->numbers_of_points = ob->numbers_of_points + 1;
+
+  	return 0;
+}
+//Muda cor Objeto 2D
+object2d * ChangeColor2d(object2d * ob, int color) {
+  	object2d * oob;
   	int i;
   
-  	oob = CreateObject(ob->numbers_of_points); 
+  	oob = CreateObject2d(ob->numbers_of_points); 
   	for(i=0;i<ob->numbers_of_points;i++) {
-    	SetObject(SetPoint(ob->points[i].x,ob->points[i].y,color),oob);    
+    	SetObject2d(SetPoint2d(ob->points[i].x,ob->points[i].y,color),oob);    
     }
     
   	return oob;  
 }
+//Muda cor Objeto 3D
+object3d * ChangeColor3d(object3d * ob, int color) {
+  	object3d * oob;
+  	int i;
+  
+  	oob = CreateObject3d(ob->numbers_of_points); 
+  	for(i=0;i<ob->numbers_of_points;i++) {
+    	SetObject3d(SetPoint3d(ob->points[i].x,ob->points[i].y,color),oob);    
+    }
+    
+  	return oob;  
+}
+
 //Cores
 palette * CreatePalette(int numbers_of_colors) {
   	palette * pal;
@@ -116,10 +155,10 @@ window * CreateWindow(float xmin, float xmax, float ymin, float ymax) {
   	return win;
 }
 //Do Universo para o Normalizado 2D
-point * Sru2Srn(point * ponto, window * janela) {
-  	point * np;
+point2d * Sru2Srn(point2d * ponto, window * janela) {
+  	point2d * np;
 
-  	np = (point *) malloc(sizeof(point));
+  	np = (point2d *) malloc(sizeof(point2d));
   	np->x = (ponto->x - janela->xmin)/(janela->xmax - janela->xmin);
   	np->y = (ponto->y - janela->ymin)/(janela->ymax - janela->ymin);
   	np->color = ponto->color;
@@ -127,26 +166,26 @@ point * Sru2Srn(point * ponto, window * janela) {
   	return np;  
 }
 //Do Normalizado 2D para o Dispositivo 2D
-point * Srn2Srd(point * ponto, bufferdevice * dev) {
-  	point * dpt;
+point * Srn2Srd(point2d * ponto, bufferdevice * dev) {
+  	point2d * dpt;
 
-  	dpt = (point *) malloc(sizeof(point));
+  	dpt = (point2d *) malloc(sizeof(point2d));
   	dpt->x = round((ponto->x)*(dev->MaxX - 1));
   	dpt->y = round((ponto->y)*(dev->MaxY - 1));
   	dpt->color = ponto->color;
  
   	return dpt;
 }
-//Sei lá
-int InWin(point * pt, window * win) {
+//Verifica se o ponto está dentro da Janela
+int InWin(point2d * pt, window * win) {
   	if ((pt->x >= win->xmin)&&(pt->x <= win->xmax)&&
 		(pt->y >= win->ymin)&&(pt->y <= win->ymax))
  		return 1;
   	else
  		return 0;
 }
-//Intersecção
-point * InterX(point * p1, point * p2, float x) {
+//Intersecção entre dois pontos no eixo X
+point * InterX(point2d * p1, point2d * p2, float x) {
  	float a , b, aux;
  
  	if (p2->x - p1->x) {
@@ -157,10 +196,10 @@ point * InterX(point * p1, point * p2, float x) {
  	else
 		aux = 1000000.0;  
  
- 	return SetPoint(x,aux,p1->color);
+ 	return SetPoint2d(x,aux,p1->color);
 }
-//Intersecção
-point * InterY(point * p1, point * p2, float y) {
+//Intersecção entre dois pontos no eixo Y
+point * InterY(point2d * p1, point2d * p2, float y) {
  	float a , b, aux;
 
  	if (p2->x - p1->x) {
@@ -173,13 +212,13 @@ point * InterY(point * p1, point * p2, float y) {
    	}else
  		aux = p2->x;
  
- 	return SetPoint(aux,y,p1->color);
+ 	return SetPoint2d(aux,y,p1->color);
 }
 //Desenha reta entre 2 pontos 2D
-int DrawLine(point * p1, point * p2, window * win, bufferdevice * dev, int color) {
+int DrawLine(point2d * p1, point2d * p2, window * win, bufferdevice * dev, int color) {
   	float a, b;
   	int i, j, aux;
-  	point * pn1, * pd1, * pn2, * pd2;
+  	point2d * pn1, * pd1, * pn2, * pd2;
   
   	pn1 = Sru2Srn(p1,win);
   	pd1 = Srn2Srd(pn1,dev);
@@ -230,15 +269,15 @@ int DrawLine(point * p1, point * p2, window * win, bufferdevice * dev, int color
 
   	return 0;
 }
-//Sei lá
-int DrawObject(object * ob, window * win, bufferdevice * dev) {
+//Desenha objeto, somente 2D
+int DrawObject(object2d * ob, window * win, bufferdevice * dev) {
   	int i;
   	float aux;
-  	point * p1, * p2, * paux;
+  	point2d * p1, * p2, * paux;
   
   	for(i=0;i<ob->numbers_of_points;i++) {
-    	p1 = SetPoint(ob->points[i].x,ob->points[i].y,ob->points[i].color);
-    	p2 = SetPoint(ob->points[(i+1)%ob->numbers_of_points].x,ob->points[(i+1)%ob->numbers_of_points].y,ob->points[(i+1)%ob->numbers_of_points].color);
+    	p1 = SetPoint2d(ob->points[i].x,ob->points[i].y,ob->points[i].color);
+    	p2 = SetPoint2d(ob->points[(i+1)%ob->numbers_of_points].x,ob->points[(i+1)%ob->numbers_of_points].y,ob->points[(i+1)%ob->numbers_of_points].color);
     
     	if (p1->y > p2->y) {
       		aux = p1->y;
@@ -288,7 +327,7 @@ int DrawObject(object * ob, window * win, bufferdevice * dev) {
 
   	return 0;
 }
-//Preenchimento
+//Preenchimento 2D
 int FillObject(bufferdevice * buf, int color) {
 	int m, n, i = 0, j, par = 0;  
 
@@ -308,8 +347,8 @@ int FillObject(bufferdevice * buf, int color) {
 
   	return 0;
 }
-//Preenchimento
-int Fill(object * ob, window * win, bufferdevice * dev, int color) {
+//Preenchimento 2D
+int Fill(object2d * ob, window * win, bufferdevice * dev, int color) {
 
   	bufferdevice * temp = CreateBuffer(dev->MaxX,dev->MaxY);  
   	DrawObject(ob,win,temp);  
@@ -343,48 +382,88 @@ void CopyView2Device(bufferdevice * dev, bufferdevice * view, int deslocaX, int 
 }
 
 //Rotação em 2D
-object * Rotate(object * ob, float theta) {
-  	object * oob;
+object2d * Rotate2d(object2d * ob, float theta) {
+  	object2d * oob;
   	int i;
   	float phi;
   
   	phi = (theta*PI)/180.0;
-  	oob = CreateObject(ob->numbers_of_points); 
+  	oob = CreateObject2d(ob->numbers_of_points); 
   	for(i=0;i<ob->numbers_of_points;i++) {
-    	SetObject(SetPoint((ob->points[i].x)*cos(phi)-(ob->points[i].y)*sin(phi),(ob->points[i].x)*sin(phi)+(ob->points[i].y)*cos(phi),ob->points[i].color),oob);    
+    	SetObject2d(SetPoint2d((ob->points[i].x)*cos(phi)-(ob->points[i].y)*sin(phi),(ob->points[i].x)*sin(phi)+(ob->points[i].y)*cos(phi),ob->points[i].color),oob);    
     }
     
   	return oob;
 }
+//Rotação em 3D - Fazer
+object3d * Rotate3d(object3d * ob, float theta) {
+  	object3d * oob;
+  	int i;
+  	float phi;
+  
+  	phi = (theta*PI)/180.0;
+  	oob = CreateObject3d(ob->numbers_of_points); 
+  	for(i=0;i<ob->numbers_of_points;i++) {
+    	SetObject3d(SetPoint3d((ob->points[i].x)*cos(phi)-(ob->points[i].y)*sin(phi),(ob->points[i].x)*sin(phi)+(ob->points[i].y)*cos(phi),ob->points[i].color),oob);    
+    }
+    
+  	return oob;
+}
+
 //Translação em 2D
-object * Translate(object * ob, float x, float y) {
-  	object * oob;
+object2d * Translate2d(object2d * ob, float x, float y) {
+  	object2d * oob;
   	int i;
   
-  	oob = CreateObject(ob->numbers_of_points); 
+  	oob = CreateObject2d(ob->numbers_of_points); 
   	for(i=0;i<ob->numbers_of_points;i++) {
-    	SetObject(SetPoint(ob->points[i].x + x,ob->points[i].y + y,ob->points[i].color),oob);    
+    	SetObject2d(SetPoint2d(ob->points[i].x + x,ob->points[i].y + y,ob->points[i].color),oob);    
     }
     
   	return oob;
 }
-//Escalonamento em 2D
-object * Scale(object * ob, float sx, float sy) {
-  	object * oob;
+//Translação em 3D - Fazer
+object3d * Translate3d(object3d * ob, float x, float y) {
+  	object3d * oob;
   	int i;
   
-  	oob = CreateObject(ob->numbers_of_points); 
+  	oob = CreateObject3d(ob->numbers_of_points); 
   	for(i=0;i<ob->numbers_of_points;i++) {
-    	SetObject(SetPoint(sx*(ob->points[i].x),sy*(ob->points[i].y),ob->points[i].color),oob);    
+    	SetObject3d(SetPoint3d(ob->points[i].x + x,ob->points[i].y + y,ob->points[i].color),oob);    
+    }
+    
+  	return oob;
+}
+
+//Escalonamento em 2D
+object2d * Scale2d(object2d * ob, float sx, float sy) {
+  	object2d * oob;
+  	int i;
+  
+  	oob = CreateObject2d(ob->numbers_of_points); 
+  	for(i=0;i<ob->numbers_of_points;i++) {
+    	SetObject2d(SetPoint2d(sx*(ob->points[i].x),sy*(ob->points[i].y),ob->points[i].color),oob);    
   	}
     
   	return oob;  
 }
-//Ponto 2D
-hpoint * LinearTransf(hmatrix * m, hpoint * p) {
+//Escalonamento em 3D - Fazer!!!
+object3d * Scale3d(object3d * ob, float sx, float sy, float sz) {
+  	object2d * oob;
+  	int i;
+  
+  	oob = CreateObject3d(ob->numbers_of_points); 
+  	for(i=0;i<ob->numbers_of_points;i++) {
+    	SetObject3d(SetPoint3d(sx*(ob->points[i].x),sy*(ob->points[i].y),ob->points[i].color),oob);    
+  	}
+    
+  	return oob;  
+}
+//Ponto Homegênio 2D - Tranformação Linear
+hpoint2d * LinearTransf2d(hmatrix2d * m, hpoint2d * p) {
   	hpoint * pt;
   
-  	pt = (hpoint *) malloc(sizeof(hpoint));
+  	pt = (hpoint2d *) malloc(sizeof(hpoint2d));
   
   	pt->x = m->a11*p->x + m->a12*p->y + m->a13*p->w;
   	pt->y = m->a21*p->x + m->a22*p->y + m->a23*p->w;
@@ -392,11 +471,44 @@ hpoint * LinearTransf(hmatrix * m, hpoint * p) {
   
   	return pt;
 }
-//Ponto 2D Homogênio
-hmatrix * ComposeMatrix(hmatrix * m1, hmatrix * m2) {
-  	hmatrix * m;
+//Ponto Homegênio 3D - Tranformação Linear - Fazer
+hpoint3d * LinearTransf3d(hmatrix3d * m, hpoint3d * p) {
+  	hpoint3d * pt;
+  
+  	pt = (hpoint3d *) malloc(sizeof(hpoint3d));
+  
+  	pt->x = m->a11*p->x + m->a12*p->y + m->a13*p->w;
+  	pt->y = m->a21*p->x + m->a22*p->y + m->a23*p->w;
+  	pt->w = m->a31*p->x + m->a32*p->y + m->a33*p->w;
+  
+  	return pt;
+}
 
-  	m = (hmatrix *) malloc(sizeof(hmatrix));
+//Ponto 2D Homogênio - Multiplica duas matrizes 3x3
+hmatrix2d * ComposeMatrix2d(hmatrix2d * m1, hmatrix2d * m2) {
+  	hmatrix2d * m;
+
+  	m = (hmatrix2d *) malloc(sizeof(hmatrix2d));
+  
+  	m->a11 = m1->a11*m2->a11 + m1->a12*m2->a21 + m1->a13*m2->a31;
+  	m->a12 = m1->a11*m2->a12 + m1->a12*m2->a22 + m1->a13*m2->a32;
+  	m->a13 = m1->a11*m2->a13 + m1->a12*m2->a23 + m1->a13*m2->a33;
+  
+  	m->a21 = m1->a21*m2->a11 + m1->a22*m2->a21 + m1->a23*m2->a31;
+  	m->a22 = m1->a21*m2->a12 + m1->a22*m2->a22 + m1->a23*m2->a32;
+  	m->a23 = m1->a21*m2->a13 + m1->a22*m2->a23 + m1->a23*m2->a33;
+  
+  	m->a31 = m1->a31*m2->a11 + m1->a32*m2->a21 + m1->a33*m2->a31;
+  	m->a32 = m1->a31*m2->a12 + m1->a32*m2->a22 + m1->a33*m2->a32;
+  	m->a33 = m1->a31*m2->a13 + m1->a32*m2->a23 + m1->a33*m2->a33;
+  
+  	return m;
+}
+//Ponto 3D Homogênio - Multiplica duas matrizes 4x4 -Fazer
+hmatrix3d * ComposeMatrix3d(hmatrix3d * m1, hmatrix3d * m2) {
+  	hmatrix3d * m;
+
+  	m = (hmatrix3d *) malloc(sizeof(hmatrix3d));
   
   	m->a11 = m1->a11*m2->a11 + m1->a12*m2->a21 + m1->a13*m2->a31;
   	m->a12 = m1->a11*m2->a12 + m1->a12*m2->a22 + m1->a13*m2->a32;
@@ -413,10 +525,22 @@ hmatrix * ComposeMatrix(hmatrix * m1, hmatrix * m2) {
   	return m;
 }
 //Matriz de Rotação 2D
-hmatrix * SetRotMatrix(float th) {
-  	hmatrix * m;
+hmatrix2d * SetRotMatrix2d(float th) {
+  	hmatrix2d * m;
 
-  	m = (hmatrix *) malloc(sizeof(hmatrix));
+  	m = (hmatrix2d *) malloc(sizeof(hmatrix2d));
+  
+  	m->a11 = cos((th*PI)/180.0); m->a12 = (-1.0)*sin((th*PI)/180.0); m->a13 = 0.0;
+  	m->a21 = sin((th*PI)/180.0); m->a22 = cos((th*PI)/180.0);        m->a23 = 0.0;
+  	m->a31 = 0.0;                m->a32 = 0.0;                       m->a33 = 1.0;
+  
+  	return m;
+}
+//Matriz de Rotação 3D - Fazer!
+hmatrix3d * SetRotMatrix3d(float th) {
+  	hmatrix3d * m;
+
+  	m = (hmatrix3d *) malloc(sizeof(hmatrix3d));
   
   	m->a11 = cos((th*PI)/180.0); m->a12 = (-1.0)*sin((th*PI)/180.0); m->a13 = 0.0;
   	m->a21 = sin((th*PI)/180.0); m->a22 = cos((th*PI)/180.0);        m->a23 = 0.0;
@@ -425,10 +549,10 @@ hmatrix * SetRotMatrix(float th) {
   	return m;
 }
 //Matriz de Escalonamento 2D
-hmatrix * SetSclMatrix(float sx, float sy) {
-  	hmatrix * m;
+hmatrix2d * SetSclMatrix2d(float sx, float sy) {
+  	hmatrix2d * m;
 
-  	m = (hmatrix *) malloc(sizeof(hmatrix));
+  	m = (hmatrix2d *) malloc(sizeof(hmatrix2d));
   
   	m->a11 = sx;  m->a12 = 0.0;  m->a13 = 0.0;
   	m->a21 = 0.0; m->a22 = sy;   m->a23 = 0.0;
@@ -436,11 +560,23 @@ hmatrix * SetSclMatrix(float sx, float sy) {
   
   	return m;
 }
-//Pontos 2D Homogênio
-hmatrix * SetSftMatrix(float dx, float dy) {
-  	hmatrix * m;
+//Matriz de Escalonamento 3D - Fazer!
+hmatrix3d * SetSclMatrix3d(float sx, float sy, float sz) {
+  	hmatrix3d * m;
 
-  	m = (hmatrix *) malloc(sizeof(hmatrix));
+  	m = (hmatrix3d *) malloc(sizeof(hmatrix3d));
+  
+  	m->a11 = sx;  m->a12 = 0.0;  m->a13 = 0.0;
+  	m->a21 = 0.0; m->a22 = sy;   m->a23 = 0.0;
+  	m->a31 = 0.0; m->a32 = 0.0;  m->a33 = 1.0;
+  
+  	return m;
+}
+//Pontos 2D Homogênio *
+hmatrix2d * SetSftMatrix2d(float dx, float dy) {
+  	hmatrix2d * m;
+
+  	m = (hmatrix2d *) malloc(sizeof(hmatrix2d));
   
   	m->a11 = 1.0;  m->a12 = 0.0;  m->a13 = dx;
   	m->a21 = 0.0;  m->a22 = 1.0;  m->a23 = dy;
@@ -448,6 +584,19 @@ hmatrix * SetSftMatrix(float dx, float dy) {
   
   	return m;  
 }
+//Pontos 3D Homogênio * Fazer!
+hmatrix3d * SetSftMatrix3d(float dx, float dy, float dz) {
+  	hmatrix3d * m;
+
+  	m = (hmatrix3d *) malloc(sizeof(hmatrix3d));
+  
+  	m->a11 = 1.0;  m->a12 = 0.0;  m->a13 = dx;
+  	m->a21 = 0.0;  m->a22 = 1.0;  m->a23 = dy;
+  	m->a31 = 0.0;  m->a32 = 0.0;  m->a33 = 1.0;
+  
+  	return m;  
+}
+
 //RGB para HSV
 ColorValues * RGB2HSV(ColorValues * rgb) {
   	float r, g, b, h, s, v, max, min;
